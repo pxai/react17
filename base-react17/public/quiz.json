@@ -1,0 +1,102 @@
+[
+    {
+        "id": 1,
+        "question": "What is React?"
+    },
+    {
+        "id": 2,
+        "question": "What is Functional Programming?"
+    },
+    {
+        "id": 2,
+        "question": "What is Redux?"
+    },
+    {
+        "id": 3,
+        "question": "Which are hooks rules?"
+    },
+    {
+        "id": 4,
+        "question": "Why does useLayoutEffect exist?"
+    },
+    {
+        "id": 5,
+        "question": "What are dependencies in useState?"
+    },
+    {
+        "id": 6,
+        "question": "why memo, useMemo, useCallback?"
+    },
+    {
+        "id": 7,
+        "question": "what is useReducer for"
+    },
+    {
+        "id": 8,
+        "question": "container vs representational pattern"
+    },
+    {
+        "id": 9,
+        "question": "HOF and HOC and with prefix"
+    },
+    {
+        "id": 10,
+        "question": "Function as A Child"
+    },
+    {
+        "id": 11,
+        "question": "ReactSuspense"
+    },
+    {
+        "id": 12,
+        "question": "What is SWR?"
+    },
+    {
+        "id": 13,
+        "question": "Styled Components library"
+    },
+    {
+        "id": 14,
+        "question": "Controlled and uncrontrolled form"
+    },
+    {
+        "id": 15,
+        "question": "Synthetic event"
+    },
+    {
+        "id": 16,
+        "question": "Event Switch pattern"
+    },
+    {
+        "id": 17,
+        "question": "What is useRef"
+    },
+    {
+        "id": 18,
+        "question": "What is a false negative in a test"
+    },
+    {
+        "id": 19,
+        "question": "What can I use msw for"
+    },
+    {
+        "id": 20,
+        "question": "What is a universal application"
+    },
+    {
+        "id": 21,
+        "question": "What is isomorphic application"
+    },
+    {
+        "id": 22,
+        "question": "What is hydrate"
+    },
+    {
+        "id": 22,
+        "question": "What is Next.js for"
+    },
+    {
+        "id": 24,
+        "question": "NavLink vs Link?"
+    }
+]
