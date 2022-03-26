@@ -7,10 +7,10 @@ type Task = {
     done: boolean
 }
 const TaskModel: ModelDefinition<Task> = Model.extend({});
-type AppRegistry = Registry<{ task: typeof TaskModel }, { /* factories can be defined here */ }>
+export type AppRegistry = Registry<{ task: typeof TaskModel }, { /* factories can be defined here */ }>
 type AppSchema = Schema<AppRegistry>
 // https://dev.to/anikcreative/mocking-back-ends-for-react-apps-with-miragejs-jgb
-export function makeServer({ environment = 'test' } = {}): Server<AppRegistry> {
+export function makeServer({ environment = 'test', urlPrefix = 'http://localhost:3000'} = {}): Server<AppRegistry> {
     const server: Server<AppRegistry> = createServer({
         environment,
         models: {
@@ -31,6 +31,8 @@ export function makeServer({ environment = 'test' } = {}): Server<AppRegistry> {
         },
 
         routes() {
+            console.log("Defining routes for: ", environment)
+            this.urlPrefix = urlPrefix;
             this.namespace = 'api';
             this.get("/tasks", (schema, request) => {        
                 return schema.all("task");      
