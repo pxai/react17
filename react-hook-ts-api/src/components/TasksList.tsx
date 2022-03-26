@@ -1,9 +1,10 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import TaskDataService from "../services/TaskService";
 import Task from '../types/Task';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const TasksList: React.FC = () => {
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState<Array<Task>>([]);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(-1);
@@ -30,10 +31,7 @@ const TasksList: React.FC = () => {
     setCurrentTask(null);
     setCurrentIndex(-1);
   };
-  const setActiveTask = (task: Task, index: number) => {
-    setCurrentTask(task);
-    setCurrentIndex(index);
-  };
+
   const removeAllTasks = () => {
     TaskDataService.removeAll()
       .then((response: any) => {
@@ -56,20 +54,10 @@ const TasksList: React.FC = () => {
         console.log(e);
       });
   };
-  const deleteTask = (id: string) => {
 
-    TaskDataService.remove(id)
-      .then((response: any) => {
-        console.log(response.data.task);
-        refreshList();
-      })
-      .catch((e: Error) => {
-        console.log(e);
-      });
-  };
   return (
     <div className="list row">
-      <div className="col-md-8">
+      <div className="col-md-12">
         <div className="input-group mb-3">
           <input
             type="text"
@@ -102,10 +90,8 @@ const TasksList: React.FC = () => {
           {tasks &&
             tasks.map((task, index) => (
               <li
-                className={
-                  "list-group-item " + (index === currentIndex ? "active" : "")
-                }
-                onClick={() => setActiveTask(task, index)}
+                className="list-group-item"
+                onClick={() =>  navigate(`/tasks/${task.id}`)}
                 key={index}
               >
                 {task.description}
@@ -118,46 +104,6 @@ const TasksList: React.FC = () => {
         >
           Remove All
         </button>
-      </div>
-      <div className="col-md-6">
-        {currentTask ? (
-          <div>
-            <h4>Task</h4>
-            <div>
-              <label>
-                <strong>Id:</strong>
-              </label>{" "}
-              {currentTask.id}
-            </div>
-            <div>
-              <label>
-                <strong>Description:</strong>
-              </label>{" "}
-              {currentTask.description}
-            </div>
-            <div>
-              <label>
-                <strong>Status:</strong>
-              </label>{" "}
-              {!!currentTask.done ? "Done" : "Pending"}
-            </div>
-            <Link
-              to={"/tasks/" + currentTask.id}
-              className=""
-            >
-              Edit
-            </Link>
-            |
-            <button className="badge badge-danger mr-2" onClick={() => deleteTask(currentTask.id)}>
-              Delete
-            </button>
-          </div>
-        ) : (
-          <div>
-            <br />
-            <p>Please click on a Task...</p>
-          </div>
-        )}
       </div>
     </div>
   );

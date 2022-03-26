@@ -3,9 +3,9 @@ import { Routes, Route, Link, useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import AddTask from "./components/AddTask";
-import TaskDetail from "./components/TaskDetail";
-import TasksList from "./components/TasksList";
 import UpdateTask from "./components/UpdateTask";
+import TasksList from "./components/TasksList";
+import TaskDetail from "./components/TaskDetail";
 
  //           <Route exact path={["/", "/tasks"]} element={TasksList} />
 const App: React.FC = () => {
@@ -22,7 +22,7 @@ const App: React.FC = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to={"/add"} className="nav-link">
+            <Link to={"/tasks/add"} className="nav-link">
               Add
             </Link>
           </li>
@@ -32,8 +32,8 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<TasksList />} />
           <Route path="/tasks" element={<TasksList />} />
-          <Route path="/add" element={<AddTask />} />
-          <Route path="/update/:id" element={<UpdateTask />} />
+          <Route path="/tasks/add" element={<AddTask />} />
+          <Route path="/tasks/edit/:id" element={<UpdateTask />} />
           <Route path="/tasks/:id" element={<TaskDetail />} />
         </Routes>
       </div>
