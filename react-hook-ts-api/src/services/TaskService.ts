@@ -20,7 +20,7 @@ const removeAll = () => {
   return http.delete<any>(`/tasks`);
 };
 const findByDescription = (description: string) => {
-  return http.get<Array<Task>>(`/tasks?description=${description}`);
+  return http.post<Array<Task>>("/tasks/search", { description });
 };
 const TaskService = {
   getAll,

@@ -18,8 +18,8 @@ const TasksList: React.FC = () => {
   const retrieveTasks = () => {
     TaskDataService.getAll()
       .then((response: any) => {
-        setTasks(response.data);
-        console.log(response.data);
+        setTasks(response.data.tasks);
+        console.log("These are tasks: ",response.data.tasks);
       })
       .catch((e: Error) => {
         console.log(e);
@@ -47,10 +47,21 @@ const TasksList: React.FC = () => {
   const findByTitle = () => {
     TaskDataService.findByDescription(searchTitle)
       .then((response: any) => {
-        setTasks(response.data);
+        setTasks(response.data.tasks);
         setCurrentTask(null);
         setCurrentIndex(-1);
         console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
+  };
+  const deleteTask = (id: string) => {
+
+    TaskDataService.remove(id)
+      .then((response: any) => {
+        console.log(response.data.task);
+        refreshList();
       })
       .catch((e: Error) => {
         console.log(e);
@@ -74,6 +85,13 @@ const TasksList: React.FC = () => {
               onClick={findByTitle}
             >
               Search
+            </button>
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={retrieveTasks}
+            >
+              See all
             </button>
           </div>
         </div>
@@ -121,14 +139,18 @@ const TasksList: React.FC = () => {
               <label>
                 <strong>Status:</strong>
               </label>{" "}
-              {currentTask.done ? "Done" : "Pending"}
+              {!!currentTask.done ? "Done" : "Pending"}
             </div>
             <Link
               to={"/tasks/" + currentTask.id}
-              className="badge badge-warning"
+              className=""
             >
               Edit
             </Link>
+            |
+            <button className="badge badge-danger mr-2" onClick={() => deleteTask(currentTask.id)}>
+              Delete
+            </button>
           </div>
         ) : (
           <div>

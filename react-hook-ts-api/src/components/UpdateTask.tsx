@@ -1,57 +1,58 @@
-import React, { useState, ChangeEvent } from "react";
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect,  ChangeEvent } from "react";
 import TaskDataService from "../services/TaskService";
 import Task from '../types/Task';
-const AddTask: React.FC = () => {
-  const initialTaskState = {
-    id: null,
-    title: "",
-    description: "",
-    published: false
-  };
-  const [task, setTask] = useState<Task>(initialTaskState);
+
+interface RouterProps { // type for `match.params`
+  id: string; // must be type `string` since value comes from the URL
+}
+
+const UpdateTask: React.FC<any> = (props: any) => {
+  const [task, setTask] = useState<Task>(props.initialTaskState);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setTask({ ...task, [name]: value });
   };
-  const saveTask = () => {
-    var data = {
-      description: task.description
-    };
-    TaskDataService.create(data)
+  const getTask = (id: string) => {
+    TaskDataService.get(id)
       .then((response: any) => {
-        setTask({
-          id: response.data.id,
-          description: response.data.description,
-          done: response.data.done
-        });
-        setSubmitted(true);
+        setTask(response.data);
         console.log(response.data);
       })
       .catch((e: Error) => {
         console.log(e);
       });
   };
-  const newTask = () => {
-    setTask(initialTaskState);
-    setSubmitted(false);
+  useEffect(() => {
+    getTask(props.match.params.id);
+  }, [props.match.params.id]);
+
+  const updateTask = () => {
+    var data = {
+      description: task.description,
+      done: !!task.done
+    };
+    TaskDataService.update(task.id, data)
+      .then((response: any) => {
+        setTask({
+          id: response.data.id,
+          description: response.data.description,
+          done: !!response.data.done
+        });
+        setSubmitted(true);
+
+        console.log(response.data);
+      })
+      .catch((e: Error) => {
+        console.log(e);
+      });
   };
+
   return (
     <div className="submit-form">
       {submitted ? (
         <div>
-          <h4>You submitted successfully!</h4>
-            <div>
-              <Link to={"/tasks"} className="btn btn-success">
-                See Tasks
-              </Link>
-            </div>
-            <div>          
-              <button className="btn btn-success" onClick={newTask}>
-                Add another
-              </button>
-            </div>
+          <h4>You updated successfully!</h4>
         </div>
       ) : (
         <div>
@@ -67,7 +68,7 @@ const AddTask: React.FC = () => {
               name="description"
             />
           </div>
-          <button onClick={saveTask} className="btn btn-success">
+          <button onClick={updateTask} className="btn btn-success">
             Submit
           </button>
         </div>
@@ -75,4 +76,4 @@ const AddTask: React.FC = () => {
     </div>
   );
 };
-export default AddTask;
+export default UpdateTask;

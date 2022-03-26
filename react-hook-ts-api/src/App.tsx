@@ -5,6 +5,8 @@ import "./App.css";
 import AddTask from "./components/AddTask";
 import TaskDetail from "./components/TaskDetail";
 import TasksList from "./components/TasksList";
+import UpdateTask from "./components/UpdateTask";
+
  //           <Route exact path={["/", "/tasks"]} element={TasksList} />
 const App: React.FC = () => {
   return (
@@ -31,6 +33,7 @@ const App: React.FC = () => {
           <Route path="/" element={<TasksList />} />
           <Route path="/tasks" element={<TasksList />} />
           <Route path="/add" element={<AddTask />} />
+          <Route path="/update/:id" element={<UpdateTask />} />
           <Route path="/tasks/:id" element={<TaskDetail />} />
         </Routes>
       </div>
